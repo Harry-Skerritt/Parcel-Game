@@ -30,13 +30,16 @@ public class ParcelSpawner : MonoBehaviour
             var customiser = parcel.GetComponent<ParcelCustomiser>();
         
             // Set the parcels destiantion
-            int destination = Random.Range(1, 26);
+            int destination = Random.Range(1, 27);
             customiser.setDestination(destination);
             string parcelLabel = NumberToLetter(destination).ToString();
+            
+            // Set the weight
+            int weight = Random.Range(0, 3);
         
             // Customise Colour -> Change to being a set colour per desitnation.
             Color parcelColour = Random.ColorHSV();
-            customiser.CustomiseParcel(parcelColour, parcelLabel);
+            customiser.CustomiseParcel(parcelColour, parcelLabel, weight);
             
         }
         else
