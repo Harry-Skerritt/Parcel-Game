@@ -7,6 +7,7 @@ public class DropLocation : MonoBehaviour
 {
     [Header("Visuals")]
     [SerializeField] private Color locationColour;
+    [SerializeField] private Color correctColour;
     [SerializeField] private Color incorrectColour;
     [SerializeField] private Color hoverColour;
     [SerializeField] private string locationName;
@@ -87,6 +88,11 @@ public class DropLocation : MonoBehaviour
             {
                 // Other Checks?
                 Debug.Log($"Correct item ({droppedObject.gameObject.name}) dropped in {gameObject.name}.");
+                if (locationSprite != null)
+                {
+                    setLocationColour(correctColour);
+                }
+                
                 onCorrectItemDropped.Invoke(); // Trigger correct item event
                 customiser.setArrived(true); // Mark the parcel as arrived
                 isCorrectDrop = true;
@@ -98,8 +104,10 @@ public class DropLocation : MonoBehaviour
                 {
                     setLocationColour(incorrectColour);
                 }
+                
                 onIncorrectItemDropped.Invoke(); // Trigger incorrect item event
-                isCorrectDrop = false;
+                customiser.setArrived(true);
+                isCorrectDrop = true; // Need to refactor this as it isnt
             }
         }
         else

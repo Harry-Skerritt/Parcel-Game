@@ -104,18 +104,13 @@ public class DraggableObject : MonoBehaviour
                  if (currentHoveredDropLocation != null)
                  {
                      bool dropSuccessful = currentHoveredDropLocation.attemptDrop(this);
-
-                     if (dropSuccessful)
+                     
+                     // Look at refactoring this
+                     if (dropSuccessful || !dropSuccessful)
                      {
                          targetPosition = currentHoveredDropLocation.transform.position;
                          Debug.Log($"Snapped to DropZone: {currentHoveredDropLocation.gameObject.name}");
                          OnSnappedToDropLocation.Invoke(this);             
-                     }
-                     else if (currentGhostOutline != null)
-                     {
-                         targetPosition = currentGhostOutline.transform.position;
-                         Debug.Log("Snapped to Ghost!");
-                         OnSnappedToGhost.Invoke(this, currentGhostOutline);
                      }
                  }
                  // Check for ghost
