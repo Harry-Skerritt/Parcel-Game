@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +5,6 @@ public class DraggableObject : MonoBehaviour
 {
     [Header("Snapping Settings")] 
     [SerializeField] private bool canSnap = true;
-    [SerializeField] private float snapDistance = 0.5f;
     [SerializeField] private GameObject ghostOutlinePrefab;
 
     [Header("Wobble Settings")] 
@@ -17,12 +13,14 @@ public class DraggableObject : MonoBehaviour
     [SerializeField]  private float wobblePositionMagnitude = 0.02f;
     [SerializeField] private float wobblePositionSpeed = 15f;
 
+    
+    [Header("Drop Zone Settings")]
+    
     // Events to notify other components
     [HideInInspector] public UnityEvent OnDragStart = new UnityEvent();
     [HideInInspector] public UnityEvent<Vector3> OnDragEnd = new UnityEvent<Vector3>(); 
     [HideInInspector] public UnityEvent<DraggableObject, GameObject> OnSnappedToGhost = new UnityEvent<DraggableObject, GameObject>();
-    [HideInInspector] public UnityEvent<DraggableObject, DropZone> OnSnappedToDropZone = new UnityEvent<DraggableObject, DropZone>();
-    [HideInInspector] public UnityEvent<DraggableObject> OnDroppedWithoutSnap = new UnityEvent<DraggableObject>();
+    [HideInInspector] public UnityEvent<DraggableObject> OnSnappedToDropLocation = new UnityEvent<DraggableObject>();
     
     private Vector3 originalPosition;
     private Quaternion originalRotation;
@@ -31,6 +29,8 @@ public class DraggableObject : MonoBehaviour
     private bool isDragging = false;
     private Collider2D myCollider;
     private Rigidbody2D myRigidbody;
+    
+    private DropLocation currentHoveredDropLocation;
 
     void Awake()
     {
@@ -58,12 +58,7 @@ public class DraggableObject : MonoBehaviour
                 currentGhostOutline = Instantiate(ghostOutlinePrefab, spawnPos, Quaternion.identity);
                 currentGhostOutline.name = "GhostOutline_" + gameObject.name;
             }
-
-            if (myCollider != null)
-            {
-                myCollider.enabled = false;
-            }
-
+            
             if (myRigidbody != null)
             {
                 myRigidbody.isKinematic = true;
@@ -75,73 +70,100 @@ public class DraggableObject : MonoBehaviour
         }
     }
     
-     void OnMouseDrag()
-        {
-            if (isDragging)
-            {
+    void OnMouseDrag()
+     {
+         if (isDragging)
+         {
             
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector3 targetPosition = (Vector3)mousePosition + initialDragOffset;
+             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
+             Vector3 targetPosition = (Vector3)mousePosition + initialDragOffset;
             
-                // Apply Wobble Rotation
-                float wobbleRotation = Mathf.Sin(Time.time * wobbleSpeed) * wobbleMagnitude;
-                transform.rotation = originalRotation * Quaternion.Euler(0, 0, wobbleRotation); // Rotate around Z-axis
+             // Apply Wobble Rotation
+             float wobbleRotation = Mathf.Sin(Time.time * wobbleSpeed) * wobbleMagnitude;
+             transform.rotation = originalRotation * Quaternion.Euler(0, 0, wobbleRotation); // Rotate around Z-axis
 
-                // Apply Wobble Position (optional, can be combined with rotation or just used alone)
-                float wobbleX = Mathf.PerlinNoise(Time.time * wobblePositionSpeed, 0) * 2 - 1; // -1 to 1 range
-                float wobbleY = Mathf.PerlinNoise(0, Time.time * wobblePositionSpeed) * 2 - 1; // -1 to 1 range
-                Vector3 wobbleOffset = new Vector3(wobbleX, wobbleY, 0) * wobblePositionMagnitude;
+             // Apply Wobble Position (optional, can be combined with rotation or just used alone)
+             float wobbleX = Mathf.PerlinNoise(Time.time * wobblePositionSpeed, 0) * 2 - 1; // -1 to 1 range
+             float wobbleY = Mathf.PerlinNoise(0, Time.time * wobblePositionSpeed) * 2 - 1; // -1 to 1 range
+             Vector3 wobbleOffset = new Vector3(wobbleX, wobbleY, 0) * wobblePositionMagnitude;
 
-                transform.position = targetPosition + wobbleOffset;
-            }
-        }
+             transform.position = targetPosition + wobbleOffset;
+         }
+     }
         
-        void OnMouseUp()
-        {
-            if (isDragging)
-            {
-                isDragging = false;
-                Vector3 targetPosition = this.transform.position;
-                transform.rotation = originalRotation;
+    void OnMouseUp()
+     {
+         if (isDragging)
+         {
+             isDragging = false;
+             Vector3 targetPosition = this.transform.position;
+             transform.rotation = originalRotation;
 
-                if (canSnap)
-                {
-                    // Check for ghost
-                    if (currentGhostOutline != null)
-                    {
-                        targetPosition = currentGhostOutline.transform.position;
-                        Debug.Log("Snapped to Ghost!");
-                        OnSnappedToGhost.Invoke(this, currentGhostOutline);
-                    }
-                    else
-                    //Check for drop zone
-                    {
-                        
-                    }
-                }
+             if (canSnap)
+             {
+                 if (currentHoveredDropLocation != null)
+                 {
+                     bool dropSuccessful = currentHoveredDropLocation.attemptDrop(this);
+
+                     if (dropSuccessful)
+                     {
+                         targetPosition = currentHoveredDropLocation.transform.position;
+                         Debug.Log($"Snapped to DropZone: {currentHoveredDropLocation.gameObject.name}");
+                         OnSnappedToDropLocation.Invoke(this);             
+                     }
+                     else if (currentGhostOutline != null)
+                     {
+                         targetPosition = currentGhostOutline.transform.position;
+                         Debug.Log("Snapped to Ghost!");
+                         OnSnappedToGhost.Invoke(this, currentGhostOutline);
+                     }
+                 }
+                 // Check for ghost
+                 else if (currentGhostOutline != null)
+                 {
+                     targetPosition = currentGhostOutline.transform.position;
+                     Debug.Log("Snapped to Ghost!");
+                     OnSnappedToGhost.Invoke(this, currentGhostOutline);
+                 }
+             }
             
-                transform.position = targetPosition;
+             transform.position = targetPosition;
 
-                if (myCollider != null)
-                {
-                    myCollider.enabled = true;
-                }
+             if (myCollider != null)
+             {
+                 myCollider.enabled = true;
+             }
 
-                if (myRigidbody != null && myRigidbody.bodyType == RigidbodyType2D.Dynamic) // Restore dynamic behavior if it was dynamic
-                {
-                    myRigidbody.isKinematic = false;
-                }
+             if (myRigidbody != null && myRigidbody.bodyType == RigidbodyType2D.Dynamic) // Restore dynamic behavior if it was dynamic
+             {
+                 myRigidbody.isKinematic = false;
+             }
 
-                if (currentGhostOutline != null)
-                {
-                    Destroy(currentGhostOutline);
-                    currentGhostOutline = null;
-                }
+             if (currentGhostOutline != null)
+             {
+                 Destroy(currentGhostOutline);
+                 currentGhostOutline = null;
+             }
                 
-                OnDragEnd.Invoke(targetPosition);
-            }
-        }
+             OnDragEnd.Invoke(targetPosition);
+             currentHoveredDropLocation = null;
+         }
+     }
 
+    public void setHoveredDropLocation(DropLocation dropLocation)
+    {
+        currentHoveredDropLocation = dropLocation;
+        Debug.Log($"{gameObject.name} is hovering over {dropLocation.gameObject.name}");
+    }
+    
+    public void clearHoveredDropLocation()
+    {
+        if (currentHoveredDropLocation != null)
+        {
+            Debug.Log($"{gameObject.name} is no longer hovering over {currentHoveredDropLocation.gameObject.name}");
+        }
+        currentHoveredDropLocation = null;
+    }
     public bool IsDragging()
     {
         return isDragging;

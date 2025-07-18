@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7424288970975188422}
   - component: {fileID: 6709958167577157345}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4040939736290437792}
   - component: {fileID: 7346359973177709182}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 5727055171431530806}
   - component: {fileID: 1374775818872069592}
   - component: {fileID: 5978935902056971742}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +231,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -6111100474875052262, guid: caf0610377cc749a3a3fc4226b911fb7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -275,8 +275,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: caf0610377cc749a3a3fc4226b911fb7, type: 2}
+  m_sharedMaterial: {fileID: -6111100474875052262, guid: caf0610377cc749a3a3fc4226b911fb7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -300,8 +300,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 71.03
-  m_fontSizeBase: 71.03
+  m_fontSize: 93
+  m_fontSizeBase: 93
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -357,7 +357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1669263995068314021}
   - component: {fileID: 3390059956930271041}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Weight Label Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 363883587457918207}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Label Backs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,7 +477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 79272986635811436}
   - component: {fileID: 8927144483217715713}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Weight Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 5088653974879601492}
   - component: {fileID: 1362754614756558561}
   - component: {fileID: 3063646215492565671}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -662,7 +662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2270884251324046748}
   - component: {fileID: 4889765285042878548}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Identifier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -748,7 +748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9183895501107251929}
   - component: {fileID: 6890350937781884156}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Special Label Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -834,7 +834,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2758968173887000163}
   - component: {fileID: 7803596886230393747}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Main-Label-Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -920,10 +920,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5766905605531350627}
   - component: {fileID: 4393934938275347350}
-  - component: {fileID: 9016256129416991616}
   - component: {fileID: 9081206998782294319}
   - component: {fileID: 38883005169302882}
-  m_Layer: 0
+  - component: {fileID: 9016256129416991616}
+  - component: {fileID: 4792516890502654772}
+  m_Layer: 3
   m_Name: Parcel
   m_TagString: Parcel
   m_Icon: {fileID: 0}
@@ -939,7 +940,7 @@ Transform:
   m_GameObject: {fileID: 5858476408976216066}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.04, y: -1.64, z: 0.03419339}
+  m_LocalPosition: {x: 0.04, y: -1.64, z: 1}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -985,6 +986,51 @@ MonoBehaviour:
   parcelDestination: 0
   parcelArrived: 0
   parcelWeight: 0
+--- !u!114 &9081206998782294319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5858476408976216066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de28b52956a87043a3c67bdf1620062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &38883005169302882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5858476408976216066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee0bfb658ea7b024c95250fc5bbd9fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canSnap: 1
+  ghostOutlinePrefab: {fileID: 6060063539809139226, guid: 383cb604090cb7048a9309d58f8bd263, type: 3}
+  wobbleMagnitude: 5
+  wobbleSpeed: 12
+  wobblePositionMagnitude: 0.02
+  wobblePositionSpeed: 15
+  OnDragStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDragEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSnappedToGhost:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSnappedToDropLocation:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &9016256129416991616
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1031,49 +1077,30 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.5187669, y: 1.507729}
   m_EdgeRadius: 0
---- !u!114 &9081206998782294319
-MonoBehaviour:
+--- !u!50 &4792516890502654772
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5858476408976216066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9de28b52956a87043a3c67bdf1620062, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &38883005169302882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5858476408976216066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee0bfb658ea7b024c95250fc5bbd9fe8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canSnap: 1
-  snapDistance: 0.5
-  ghostOutlinePrefab: {fileID: 6060063539809139226, guid: 383cb604090cb7048a9309d58f8bd263, type: 3}
-  wobbleMagnitude: 5
-  wobbleSpeed: 12
-  wobblePositionMagnitude: 0.02
-  wobblePositionSpeed: 15
-  OnDragStart:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDragEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSnappedToGhost:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSnappedToDropZone:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDroppedWithoutSnap:
-    m_PersistentCalls:
-      m_Calls: []
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

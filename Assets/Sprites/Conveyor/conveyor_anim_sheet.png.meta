@@ -243,7 +243,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      conveyor_anim_sheet_0: -3325586532360459758
+      conveyor_anim_sheet_1: -7854201656263539452
+      conveyor_anim_sheet_2: -342463234572870901
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

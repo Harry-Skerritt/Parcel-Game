@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,7 +6,7 @@ public class ParcelSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject parcelPrefab;
     [SerializeField] private Transform parcelSpawnPoint;
-
+    [Range(1, 27)][SerializeField] private int maxParcelDestinationLetter;
 
     private void Update()
     {
@@ -30,7 +28,7 @@ public class ParcelSpawner : MonoBehaviour
             var customiser = parcel.GetComponent<ParcelCustomiser>();
         
             // Set the parcels destiantion
-            int destination = Random.Range(1, 27);
+            int destination = Random.Range(1, maxParcelDestinationLetter);
             customiser.setDestination(destination);
             string parcelLabel = NumberToLetter(destination).ToString();
             

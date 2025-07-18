@@ -1,13 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(DraggableObject))]
 public class ParcelBehaviour : MonoBehaviour
 {
     private DraggableObject draggableObject;
+    private ParcelCustomiser parcelCustomiser;
+    
+    [SerializeField] private LayerMask dropLayer;
 
     void Awake()
     {
@@ -17,18 +17,25 @@ public class ParcelBehaviour : MonoBehaviour
             Debug.LogError("Parcel Controller requires a DraggableObject");
             enabled = false;
         }
+
+        parcelCustomiser = GetComponent<ParcelCustomiser>();
+        if (parcelCustomiser == null)
+        {
+            Debug.LogError("Parcel Controller requires a ParcelCustomiser");
+            enabled = false;
+        }
     }
 
     private void OnEnable()
     {
         draggableObject.OnDragStart.AddListener(HandleDragStart);
-        draggableObject.OnSnappedToDropZone.AddListener(HandleSnappedToDropZone);
+        draggableObject.OnSnappedToDropLocation.AddListener(HandleSnappedToDropLocation);
     }
 
     private void OnDisable()
     {
         draggableObject.OnDragStart.RemoveListener(HandleDragStart);
-        draggableObject.OnSnappedToDropZone.RemoveListener(HandleSnappedToDropZone);
+        draggableObject.OnSnappedToDropLocation.RemoveListener(HandleSnappedToDropLocation);
     }
 
     private void HandleDragStart()
@@ -37,9 +44,10 @@ public class ParcelBehaviour : MonoBehaviour
         // Other stuff when picked up
     }
 
-    private void HandleSnappedToDropZone(DraggableObject obj, DropZone zone)
+    private void HandleSnappedToDropLocation(DraggableObject obj)
     {
-        Debug.Log(obj.name + " (a parcel) was placed in " + zone.name);
-        zone.OnObjectPlaced(obj);
+        Debug.Log(obj.name + " (a parcel) was placed on a dz");
+        Destroy(gameObject);
     }
+    
 }
