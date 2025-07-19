@@ -135,5 +135,10 @@ public class ParcelCustomiser : MonoBehaviour
     {
         return hasSpecial;
     }
+
+    public bool getDamaged()
+    {
+        return damagedBox;
+    }
     
 }

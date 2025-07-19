@@ -6,21 +6,21 @@ using UnityEngine.Events;
 public class DropLocation : MonoBehaviour
 {
     [Header("Visuals")]
-    [SerializeField] private Color locationColour;
-    [SerializeField] private Color correctColour;
-    [SerializeField] private Color incorrectColour;
-    [SerializeField] private Color hoverColour;
-    [SerializeField] private string locationName;
-    [SerializeField] private int destinationIdentifier;
+    [SerializeField] protected Color locationColour;
+    [SerializeField] protected Color correctColour;
+    [SerializeField] protected Color incorrectColour;
+    [SerializeField] protected Color hoverColour;
+    [SerializeField] protected string locationName;
+    [SerializeField] protected int destinationIdentifier;
     
-    [SerializeField] private TextMeshPro locationText;
-    private SpriteRenderer locationSprite;
+    [SerializeField] protected TextMeshPro locationText = null;
+    protected SpriteRenderer locationSprite;
 
     [Header("Events")] 
-    [SerializeField] private UnityEvent onCorrectItemDropped;
-    [SerializeField] private UnityEvent onIncorrectItemDropped;
+    [SerializeField] protected UnityEvent onCorrectItemDropped;
+    [SerializeField] protected UnityEvent onIncorrectItemDropped;
     
-    [SerializeField] private string parcelTag = "Parcel";
+    [SerializeField] protected string parcelTag = "Parcel";
 
 
     private void Awake()
@@ -87,27 +87,13 @@ public class DropLocation : MonoBehaviour
             if (destinationIdentifier == customiser.getDestination())
             {
                 // Other Checks?
-                Debug.Log($"Correct item ({droppedObject.gameObject.name}) dropped in {gameObject.name}.");
-                if (locationSprite != null)
-                {
-                    setLocationColour(correctColour);
-                }
-                
-                onCorrectItemDropped.Invoke(); // Trigger correct item event
-                customiser.setArrived(true); // Mark the parcel as arrived
+                correctItem(droppedObject, customiser);
                 isCorrectDrop = true;
             }
             else
             {
-                Debug.Log($"Incorrect item ({droppedObject.gameObject.name}) dropped in {gameObject.name}.");
-                if (locationSprite != null)
-                {
-                    setLocationColour(incorrectColour);
-                }
-                
-                onIncorrectItemDropped.Invoke(); // Trigger incorrect item event
-                customiser.setArrived(true);
-                isCorrectDrop = true; // Need to refactor this as it isnt
+                incorrectItem(droppedObject, customiser);
+                isCorrectDrop = false;
             }
         }
         else
@@ -124,22 +110,58 @@ public class DropLocation : MonoBehaviour
         return isCorrectDrop;
     }
     
-    void setLocationLook()
+    protected void setLocationLook()
     {
        setLocationColour(locationColour);
-       locationText.text = locationName;
+       if (locationText != null)
+       {
+           locationText.text = locationName;
+       }
     }
 
-    void setLocationColour(Color newColour)
+    protected void setLocationColour(Color newColour)
     {
-        locationSprite.color = newColour;
-        locationText.color = newColour;
+        if (locationSprite != null)
+        {
+            locationSprite.color = newColour;
+
+        }
+
+        if (locationText != null)
+        {
+            locationText.color = newColour;
+
+        }
     }
 
-    void initialiseLocation(string name, Color colour)
+    protected void initialiseLocation(string name, Color colour)
     {
         locationColour = colour;
         locationName = name;
         setLocationLook();
+    }
+
+    protected void correctItem(DraggableObject droppedObject, ParcelCustomiser customiser)
+    {
+        Debug.Log($"Correct item ({droppedObject.gameObject.name}) dropped in {gameObject.name}.");
+        if (locationSprite != null)
+        {
+            setLocationColour(correctColour);
+        }
+                
+        onCorrectItemDropped.Invoke(); // Trigger correct item event
+        customiser.setArrived(true); // Mark the parcel as arrived
+    }
+
+    protected void incorrectItem(DraggableObject droppedObject, ParcelCustomiser customiser)
+    {
+        Debug.Log($"Incorrect item ({droppedObject.gameObject.name}) dropped in {gameObject.name}.");
+        if (locationSprite != null)
+        {
+            setLocationColour(incorrectColour);
+        }
+                
+        onIncorrectItemDropped.Invoke(); // Trigger incorrect item event
+        customiser.setArrived(true);
     }
 }
